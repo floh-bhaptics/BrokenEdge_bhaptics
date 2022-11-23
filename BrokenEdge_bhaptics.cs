@@ -11,6 +11,7 @@ namespace BrokenEdge_bhaptics
 {
     public class BrokenEdge_bhaptics : MelonMod
     {
+        
         public static TactsuitVR tactsuitVr;
         public static bool twoHanded = false;
         public static bool isRightHand = true;
@@ -20,17 +21,17 @@ namespace BrokenEdge_bhaptics
             tactsuitVr = new TactsuitVR();
             tactsuitVr.PlaybackHaptics("HeartBeat");
         }
-
+        
         [HarmonyPatch(typeof(Player.Items.Sword.SwordController), "ProcessSwordHit", new Type[] { typeof(GameState.RoundManager.SwordHitEvent) })]
         public class bhaptics_SwordHit
         {
             [HarmonyPostfix]
             public static void Postfix(Player.Items.Sword.SwordController __instance)
             {
-                twoHanded = (__instance.IsTwoHanded);
-                isRightHand = (__instance.CurrentHand.IsRightHand);
-                float intensity = __instance.TipSpeed.magnitude / 8.0f;
-                //tactsuitVr.LOG("Sword speed: " + intensity);
+                isRightHand = (__instance.State == Player.Items.ItemBase.ItemState.InRightHand);
+                twoHanded = (__instance.IsHeldWithTwoHands);
+                float intensity = __instance.TipSpeed.magnitude / 7.0f;
+                tactsuitVr.LOG("Sword speed: " + intensity);
                 tactsuitVr.SwordRecoil(isRightHand, twoHanded, intensity);
             }
         }
@@ -41,8 +42,8 @@ namespace BrokenEdge_bhaptics
             [HarmonyPostfix]
             public static void Postfix(Player.Items.Sword.SwordController __instance)
             {
-                twoHanded = (__instance.IsTwoHanded);
-                isRightHand = (__instance.CurrentHand.IsRightHand);
+                twoHanded = (__instance.IsHeldWithTwoHands);
+                isRightHand = (__instance.State == Player.Items.ItemBase.ItemState.InRightHand);
                 tactsuitVr.SwordRecoil(isRightHand, twoHanded, 1.0f);
                 tactsuitVr.PlaybackHaptics("BrokenSword");
                 tactsuitVr.StartHeartBeat();
@@ -58,18 +59,35 @@ namespace BrokenEdge_bhaptics
                 tactsuitVr.StopHeartBeat();
             }
         }
-
+        
         [HarmonyPatch(typeof(Player.Items.Sword.SwordController), "OnDefeatAnimationStarted", new Type[] { typeof(GameState.DefeatManager.DefeatAnimationInfo) })]
         public class bhaptics_PlayerDefeat
         {
             [HarmonyPostfix]
             public static void Postfix(Player.Items.Sword.SwordController __instance, GameState.DefeatManager.DefeatAnimationInfo info)
             {
-                if (info.LosingPlayer != __instance.Archetype.PlayerNumber) return;
-                tactsuitVr.PlaybackHaptics("SlashDefault");
+                if (!__instance.Archetype.IsLocal) return;
+                if (info.LosingPlayer != __instance.Archetype.PlayerNumber)
+                {
+                    twoHanded = (__instance.IsHeldWithTwoHands);
+                    isRightHand = (__instance.State == Player.Items.ItemBase.ItemState.InRightHand);
+                    tactsuitVr.SwordRecoil(isRightHand, twoHanded, 1.0f);
+                }
+                else tactsuitVr.PlaybackHaptics("SlashDefault");
             }
         }
 
+        [HarmonyPatch(typeof(Player.Items.Shield.ShieldController), "DisableShieldParts", new Type[] { typeof(string) })]
+        public class bhaptics_ShieldHit
+        {
+            [HarmonyPostfix]
+            public static void Postfix(Player.Items.Shield.ShieldController __instance)
+            {
+                twoHanded = false;
+                isRightHand = (__instance.State == Player.Items.ItemBase.ItemState.InRightHand);
+                tactsuitVr.SwordRecoil(isRightHand, twoHanded, 1.0f);
+            }
+        }
 
     }
 }
