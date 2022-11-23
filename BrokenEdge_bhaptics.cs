@@ -30,8 +30,7 @@ namespace BrokenEdge_bhaptics
             {
                 isRightHand = (__instance.State == Player.Items.ItemBase.ItemState.InRightHand);
                 //twoHanded = (__instance.IsHeldWithTwoHands);
-                float intensity = __instance.TipSpeed.magnitude / 7.0f;
-                tactsuitVr.LOG("Sword speed: " + intensity);
+                float intensity = __instance.TipSpeed.magnitude / 8.0f;
                 tactsuitVr.SwordRecoil(isRightHand, twoHanded, intensity);
             }
         }
