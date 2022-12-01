@@ -28,6 +28,7 @@ namespace BrokenEdge_bhaptics
             [HarmonyPostfix]
             public static void Postfix(Player.Items.Sword.SwordController __instance)
             {
+                if (!__instance.Archetype.IsLocal) return;
                 isRightHand = (__instance.State == Player.Items.ItemBase.ItemState.InRightHand);
                 //twoHanded = (__instance.IsHeldWithTwoHands);
                 float intensity = __instance.TipSpeed.magnitude / 8.0f;
@@ -42,7 +43,7 @@ namespace BrokenEdge_bhaptics
             public static void Postfix(Player.Items.Sword.SwordController __instance)
             {
                 if (!__instance.Archetype.IsLocal) return;
-                //twoHanded = (__instance.IsHeldWithTwoHands);
+                twoHanded = (__instance.IsHeldWithTwoHands);
                 isRightHand = (__instance.State == Player.Items.ItemBase.ItemState.InRightHand);
                 tactsuitVr.SwordRecoil(isRightHand, twoHanded, 1.0f);
                 tactsuitVr.PlaybackHaptics("BrokenSword");
@@ -83,6 +84,7 @@ namespace BrokenEdge_bhaptics
             [HarmonyPostfix]
             public static void Postfix(Player.Items.Shield.ShieldController __instance)
             {
+                if (!__instance.Archetype.IsLocal) return;
                 twoHanded = false;
                 isRightHand = (__instance.State == Player.Items.ItemBase.ItemState.InRightHand);
                 tactsuitVr.SwordRecoil(isRightHand, twoHanded, 1.0f);
