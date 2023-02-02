@@ -8,7 +8,7 @@ using HarmonyLib;
 using MyBhapticsTactsuit;
 using Il2Cpp;
 
-[assembly: MelonInfo(typeof(BrokenEdge_bhaptics.BrokenEdge_bhaptics), "BrokenEdge_bhaptics", "1.1.1", "Florian Fahrenberger")]
+[assembly: MelonInfo(typeof(BrokenEdge_bhaptics.BrokenEdge_bhaptics), "BrokenEdge_bhaptics", "2.0.0", "Florian Fahrenberger")]
 [assembly: MelonGame("TREBUCHET", "Broken Edge")]
 
 namespace BrokenEdge_bhaptics
