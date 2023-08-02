@@ -26,7 +26,7 @@ namespace BrokenEdge_bhaptics
             tactsuitVr.PlaybackHaptics("HeartBeat");
         }
         
-        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "ProcessSwordHit", new Type[] { typeof(Il2CppGameState.RoundManager.SwordHitEvent) })]
+        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "ProcessSwordHit", new Type[] { typeof(Il2CppGameState.SwordHitEvent) })]
         public class bhaptics_SwordHit
         {
             [HarmonyPostfix]
@@ -40,7 +40,7 @@ namespace BrokenEdge_bhaptics
             }
         }
 
-        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "BreakSword", new Type[] {  })]
+        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "Break", new Type[] {  })]
         public class bhaptics_BreakSword
         {
             [HarmonyPostfix]
@@ -55,7 +55,7 @@ namespace BrokenEdge_bhaptics
             }
         }
 
-        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "ResetSwords", new Type[] { })]
+        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "ResetItem", new Type[] { })]
         public class bhaptics_ResetSwords
         {
             [HarmonyPostfix]
@@ -65,11 +65,11 @@ namespace BrokenEdge_bhaptics
             }
         }
         
-        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "OnDefeatAnimationStarted", new Type[] { typeof(Il2CppGameState.DefeatManager.DefeatAnimationInfo) })]
+        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "OnDefeatAnimationStarted", new Type[] { typeof(Il2CppGameState.DefeatAnimationInfo) })]
         public class bhaptics_PlayerDefeat
         {
             [HarmonyPostfix]
-            public static void Postfix(Il2CppPlayer.Items.Sword.SwordController __instance, Il2CppGameState.DefeatManager.DefeatAnimationInfo info)
+            public static void Postfix(Il2CppPlayer.Items.Sword.SwordController __instance, Il2CppGameState.DefeatAnimationInfo info)
             {
                 if (!__instance.Archetype.IsLocal) return;
                 if (info.LosingPlayer != __instance.Archetype.PlayerNumber)
