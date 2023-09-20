@@ -7,6 +7,7 @@ using MelonLoader;
 using HarmonyLib;
 using MyBhapticsTactsuit;
 using Il2Cpp;
+using Il2CppPlayer.Items.Shield;
 
 [assembly: MelonInfo(typeof(BrokenEdge_bhaptics.BrokenEdge_bhaptics), "BrokenEdge_bhaptics", "2.0.0", "Florian Fahrenberger")]
 [assembly: MelonGame("TREBUCHET", "Broken Edge")]
@@ -26,7 +27,7 @@ namespace BrokenEdge_bhaptics
             tactsuitVr.PlaybackHaptics("HeartBeat");
         }
         
-        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "ProcessSwordHit", new Type[] { typeof(Il2CppGameState.SwordHitEvent) })]
+        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "OnFinalSwordHit", new Type[] { typeof(Il2CppGameState.SwordHitEvent) })]
         public class bhaptics_SwordHit
         {
             [HarmonyPostfix]
@@ -55,7 +56,7 @@ namespace BrokenEdge_bhaptics
             }
         }
 
-        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "ResetItem", new Type[] { })]
+        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "Reset", new Type[] { })]
         public class bhaptics_ResetSwords
         {
             [HarmonyPostfix]
@@ -82,7 +83,7 @@ namespace BrokenEdge_bhaptics
             }
         }
 
-        [HarmonyPatch(typeof(Il2CppPlayer.Items.Shield.ShieldController), "DisableShieldParts", new Type[] { typeof(string) })]
+        [HarmonyPatch(typeof(Il2CppPlayer.Items.Shield.ShieldController), "DisableShieldParts", new Type[] { typeof(ShieldZone) })]
         public class bhaptics_ShieldHit
         {
             [HarmonyPostfix]
