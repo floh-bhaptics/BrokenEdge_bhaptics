@@ -9,7 +9,7 @@ using MyBhapticsTactsuit;
 using Il2Cpp;
 using Il2CppPlayer.Items.Shield;
 
-[assembly: MelonInfo(typeof(BrokenEdge_bhaptics.BrokenEdge_bhaptics), "BrokenEdge_bhaptics", "2.0.0", "Florian Fahrenberger")]
+[assembly: MelonInfo(typeof(BrokenEdge_bhaptics.BrokenEdge_bhaptics), "BrokenEdge_bhaptics", "2.0.1", "Florian Fahrenberger")]
 [assembly: MelonGame("TREBUCHET", "Broken Edge")]
 
 namespace BrokenEdge_bhaptics
