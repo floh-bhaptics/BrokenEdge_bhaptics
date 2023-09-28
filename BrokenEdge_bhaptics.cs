@@ -8,8 +8,9 @@ using HarmonyLib;
 using MyBhapticsTactsuit;
 using Il2Cpp;
 using Il2CppPlayer.Items.Shield;
+using Il2CppGameState;
 
-[assembly: MelonInfo(typeof(BrokenEdge_bhaptics.BrokenEdge_bhaptics), "BrokenEdge_bhaptics", "2.0.1", "Florian Fahrenberger")]
+[assembly: MelonInfo(typeof(BrokenEdge_bhaptics.BrokenEdge_bhaptics), "BrokenEdge_bhaptics", "2.0.2", "Florian Fahrenberger")]
 [assembly: MelonGame("TREBUCHET", "Broken Edge")]
 
 namespace BrokenEdge_bhaptics
@@ -83,7 +84,7 @@ namespace BrokenEdge_bhaptics
             }
         }
 
-        [HarmonyPatch(typeof(Il2CppPlayer.Items.Shield.ShieldController), "DisableShieldParts", new Type[] { typeof(ShieldZone) })]
+        [HarmonyPatch(typeof(Il2CppPlayer.Items.Shield.ShieldController), "ApplyCut", new Type[] { typeof(ShieldHitEvent) })]
         public class bhaptics_ShieldHit
         {
             [HarmonyPostfix]
