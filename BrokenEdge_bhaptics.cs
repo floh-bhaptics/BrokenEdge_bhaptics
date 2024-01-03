@@ -10,7 +10,7 @@ using Il2Cpp;
 using Il2CppPlayer.Items.Shield;
 using Il2CppGameState;
 
-[assembly: MelonInfo(typeof(BrokenEdge_bhaptics.BrokenEdge_bhaptics), "BrokenEdge_bhaptics", "2.0.2", "Florian Fahrenberger")]
+[assembly: MelonInfo(typeof(BrokenEdge_bhaptics.BrokenEdge_bhaptics), "BrokenEdge_bhaptics", "2.0.3", "Florian Fahrenberger")]
 [assembly: MelonGame("TREBUCHET", "Broken Edge")]
 
 namespace BrokenEdge_bhaptics
@@ -57,7 +57,7 @@ namespace BrokenEdge_bhaptics
             }
         }
 
-        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "Reset", new Type[] { })]
+        [HarmonyPatch(typeof(Il2CppPlayer.Items.Sword.SwordController), "Reinitialize", new Type[] { })]
         public class bhaptics_ResetSwords
         {
             [HarmonyPostfix]
